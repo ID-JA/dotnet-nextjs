@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="NextDotnet" />
+    <Using Include="ServiceStack" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <Target Name="CreateAppDataFolderBuild" AfterTargets="AfterBuild">
+    <MakeDir Directories="$(BuildDir)App_Data" Condition="!Exists('$(BuildDir)App_Data')" />
+  </Target>
+  
+  <Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">
+    <MakeDir Directories="$(PublishDir)App_Data" Condition="!Exists('$(PublishDir)App_Data')" />
+  </Target>
+  
+  <ItemGroup>
+    <PackageReference Include="ServiceStack" Version="6.*" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="6.*" />
+    <PackageReference Include="ServiceStack.Server" Version="6.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NextDotnet.ServiceInterface\NextDotnet.ServiceInterface.csproj" />
+    <ProjectReference Include="..\NextDotnet.ServiceModel\NextDotnet.ServiceModel.csproj" />
+  </ItemGroup>
+
+</Project>
